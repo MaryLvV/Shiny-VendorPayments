@@ -38,37 +38,44 @@ library(shiny)
 options(shiny.deprecation.messages=FALSE)
 load("data/allFY.Rda")
 shinyUI(
-      fluidPage(theme = "flatly.css",
+      fluidPage( 
             titlePanel("Vendor Payments in Tennessee"),
             # data inputs
             fluidRow(
-                  column(4, 
+                     column(12, tags$p("",tags$strong("About the Data"),""),
+                                   tags$p("The data for this app comes from Transparent Tennessee -- http://www.tn.gov/opengov -- the 
+                                   state of Tennessee’s open government site.  A fiscal year in Tennessee runs from July 1 – June 30.  
+                                   FY2015 is the current fiscal year.  It will end on 6/30/2015. The full fiscal year files for 
+                                   FY2012, FY2013, and FY2014 were summarized by agency and totaled for each of the three fiscal years.  
+                                   Payments that are categorized as 'protected vendor payments' are primarily payments related to TennCare."),  
+                                   tags$p("",tags$strong("How to Use the App"),""),
+                                   tags$p("Select an agency using the ‘Agency’ dropdown to compare that agency’s spending over the three fiscal years.  
+                                   A single fiscal year may be viewed by selecting it in the ‘Fiscal.Year’ dropdown.")
+                                    )
+            ),
+                    
+             fluidRow(
+                      column(4, 
                          selectInput("agency", 
                                      "Agency:", 
                                      c("All", 
                                        unique(as.character(allFY$Agency))))
-                  ),
-                  column(4, 
+                        ),
+                      column(4, 
                          selectInput("FY", 
                                      "Fiscal Year:", 
                                      c("All", 
                                        unique(as.character(allFY$Fiscal.Year))))
-                   )
-#,
-#                   column(4, 
-#                          selectInput("amount", 
-#                                      "Total Amount Paid:", 
-#                                      c("All", 
-#                                        unique(as.character(allFY$Total))))
-#                   )        
+                        )
+                  
             ),
             #output row 
             fluidRow(
                   column(12,
-                  dataTableOutput(outputId="table")
+                         dataTableOutput(outputId="table")
                   )
             )    
-      )  
+      )            
 )
 
 
